@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    android:background="@drawable/layout_bg">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/shopbackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/plebania" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/shopDps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:onClick="shopDps"
+        android:text="Pałacyk"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6" />
+
+    <TextView
+        android:id="@+id/shopDpstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopDps"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="10$ | +1$ na sekundę"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"/>
+
+    <Button
+        android:id="@+id/shopDps2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/shopDpstext"
+        android:gravity="center"
+        android:maxLines="1"
+        android:onClick="shopDps2"
+        android:text="Ojcowizna"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6" />
+
+    <TextView
+        android:id="@+id/shopDps2text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopDps2"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="100$ | +50$ na sekundę"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"/>
+
+    <Button
+        android:id="@+id/shopDps3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/shopDps2text"
+        android:gravity="center"
+        android:maxLines="1"
+        android:onClick="shopDps3"
+        android:text="Browar"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6" />
+
+    <TextView
+        android:id="@+id/shopDps3text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopDps3"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="500$ | +100$ na sekundę"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"/>
+
+    <Button
+        android:id="@+id/shopDps4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/shopDps3text"
+        android:gravity="center"
+        android:maxLines="1"
+        android:onClick="shopDps4"
+        android:text="Plebania"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6" />
+
+    <TextView
+        android:id="@+id/shopDps4text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopDps4"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="2000$ | +150$ na sekundę"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"/>
+
+</RelativeLayout>
