@@ -55,16 +55,16 @@ public class ShopSecond extends Activity {
     public void loadPref() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        long shopDpsKey = sharedPref.getLong(shopDpsKeyString, 10);
+        long shopDpsKey = sharedPref.getLong(shopDpsKeyString, 500);
         shopDps = shopDpsKey;
 
-        long shopDps2Key = sharedPref.getLong(shopDps2KeyString, 100);
+        long shopDps2Key = sharedPref.getLong(shopDps2KeyString, 4000);
         shopDps2 = shopDps2Key;
 
-        long shopDps3Key = sharedPref.getLong(shopDps3KeyString, 500);
+        long shopDps3Key = sharedPref.getLong(shopDps3KeyString, 10000);
         shopDps3 = shopDps3Key;
 
-        long shopDps4Key = sharedPref.getLong(shopDps4KeyString, 2000);
+        long shopDps4Key = sharedPref.getLong(shopDps4KeyString, 25000);
         shopDps4 = shopDps4Key;
 
     }

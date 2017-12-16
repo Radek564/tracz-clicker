@@ -81,29 +81,29 @@ public class ShopClick extends Activity {
         //Views
         shopDpcBtn = (Button) findViewById(R.id.shopDpc);
         shopDpcBtnText = (TextView) findViewById(R.id.shopDpctext);
-        shopDpcBtnText.setText(shopDpc + "$ | x2$ za klik");
+        shopDpcBtnText.setText(shopDpc + "$ | +10$ za klik");
 
         shopDpc2Btn = (Button) findViewById(R.id.shopDpc2);
         shopDpc2BtnText = (TextView) findViewById(R.id.shopDpc2text);
-        shopDpc2BtnText.setText(shopDpc2 + "$ | x4$ za klik");
+        shopDpc2BtnText.setText(shopDpc2 + "$ | +20$ za klik");
 
         shopDpc3Btn = (Button) findViewById(R.id.shopDpc3);
         shopDpc3BtnText = (TextView) findViewById(R.id.shopDpc3text);
-        shopDpc3BtnText.setText(shopDpc3 + "$ | x8$ za klik");
+        shopDpc3BtnText.setText(shopDpc3 + "$ | +30$ za klik");
 
         shopDpc4Btn = (Button) findViewById(R.id.shopDpc4);
         shopDpc4BtnText = (TextView) findViewById(R.id.shopDpc4text);
-        shopDpc4BtnText.setText(shopDpc4 + "$ | x16$ za klik");
+        shopDpc4BtnText.setText(shopDpc4 + "$ | +40$ za klik");
     }
 
     public void shopDpc(View v){
         if(MainActivity.dot >= shopDpc){
             MainActivity.dot -= shopDpc;
-            MainActivity.dpc *= 2;
+            MainActivity.dpc += 10;
 
             shopDpc *= 1.5;
 
-            shopDpcBtnText.setText(shopDpc + "$ | x2$ za klik");
+            shopDpcBtnText.setText(shopDpc + "$ | +10$ za klik");
             MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
             MainActivity.dotsView.setText(MainActivity.dot + "$");
 
@@ -119,11 +119,11 @@ public class ShopClick extends Activity {
     public void shopDpc2(View v){
         if(MainActivity.dot >= shopDpc2){
             MainActivity.dot -= shopDpc2;
-            MainActivity.dpc *= 4;
+            MainActivity.dpc += 20;
 
             shopDpc2 *= 1.5;
 
-            shopDpc2BtnText.setText(shopDpc2 + "$ | x4$ za klik");
+            shopDpc2BtnText.setText(shopDpc2 + "$ | +20$ za klik");
             MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
             MainActivity.dotsView.setText(MainActivity.dot + "$");
 
@@ -139,11 +139,11 @@ public class ShopClick extends Activity {
     public void shopDpc3(View v){
         if(MainActivity.dot >= shopDpc3){
             MainActivity.dot -= shopDpc3;
-            MainActivity.dpc *= 8;
+            MainActivity.dpc += 30;
 
             shopDpc3 *= 1.5;
 
-            shopDpc3BtnText.setText(shopDpc3 + "$ | x8$ za klik");
+            shopDpc3BtnText.setText(shopDpc3 + "$ | +30$ za klik");
             MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
             MainActivity.dotsView.setText(MainActivity.dot + "$");
 
@@ -159,11 +159,11 @@ public class ShopClick extends Activity {
     public void shopDpc4(View v){
         if(MainActivity.dot >= shopDpc4){
             MainActivity.dot -= shopDpc4;
-            MainActivity.dpc *= 16;
+            MainActivity.dpc += 40;
 
             shopDpc4 *= 1.5;
 
-            shopDpc4BtnText.setText(shopDpc4 + "$ | x16$ za klik");
+            shopDpc4BtnText.setText(shopDpc4 + "$ | +40$ za klik");
             MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
             MainActivity.dotsView.setText(MainActivity.dot + "$");
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
     public static TextView dotsView;
     public static TextView dpsAndDpcView;
     public static TextView cytat1;
+    public static ImageView czapka;
 
     Random rnd = new Random();
 
     public ImageButton dotBtn;
-
 
     private String[] cytaty;
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         cytaty = getResources().getStringArray(R.array.cytaty);
         final Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.move2);
+        final Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.move3);
         final View view2 = findViewById(R.id.cytat1);
         view2.startAnimation(anim2);
 
@@ -78,6 +80,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         anim3.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                int randomIndex = new Random().nextInt(cytaty.length);
+                String randomName = cytaty[randomIndex];
+                cytat1.setText(randomName);
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                cytat1.setTextColor(color);
+                view2.startAnimation(anim4);
+            }
+        });
+
+        anim4.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
             }
@@ -135,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
         long dpsKey = sharedPref.getLong(dpsKeyString, 0);
             dps = dpsKey;
 
+        long shopDecBoughtKey = sharedPref.getLong(ShopDecorations.shopDecBoughtKeyString, 0);
+            ShopDecorations.shopDecBought = shopDecBoughtKey;
+
     }
 
     public void savePref(String key, long value) {
@@ -155,7 +178,13 @@ public class MainActivity extends AppCompatActivity {
 
         cytat1 = (TextView) findViewById(R.id.cytat1);
 
+        czapka = (ImageView) findViewById(R.id.czapka);
+
         Button shopBtn = (Button) findViewById(R.id.shopBtn);
+
+        if (ShopDecorations.shopDecBought == 1) {
+            czapka.setVisibility(View.VISIBLE);
+        }
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
         shopBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Strona w budowie!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Strona w budowie!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ShopDecorations.class));
             }
         });
 
@@ -190,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
         final View view = findViewById(R.id.dotBtn);
         view.startAnimation(anim);
+
         dot += dpc;
         dotsView.setText(dot + "$");
 
