@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         final Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.move2);
         final Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.move3);
-        final View view2 = findViewById(R.id.cytat1);
+        final View view2 = findViewById(R.id.quoteText);
 
         view2.startAnimation(anim2);
 
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         dpsAndDpcView = (TextView) findViewById(R.id.dpsAndDpcView);
             dpsAndDpcView.setText(dps +"$/sek" + System.getProperty ("line.separator") + dpc + "$/klik");
 
-        quoteText = (TextView) findViewById(R.id.cytat1);
+        quoteText = (TextView) findViewById(R.id.quoteText);
 
         czapka = (ImageView) findViewById(R.id.czapka);
 
