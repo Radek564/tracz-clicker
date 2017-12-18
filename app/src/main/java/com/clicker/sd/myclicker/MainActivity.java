@@ -14,9 +14,10 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.content.Intent;
-import android.widget.Toast;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,14 +34,15 @@ public class MainActivity extends AppCompatActivity {
     //Views
     public static TextView dotsView;
     public static TextView dpsAndDpcView;
-    public static TextView cytat1;
+    public static TextView quoteText;
     public static ImageView czapka;
 
     Random rnd = new Random();
+    Timer timer = new Timer();
 
     public ImageButton dotBtn;
 
-    private String[] cytaty;
+    private String[] quotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,32 +51,40 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(this, Music.class));
 
-        cytaty = getResources().getStringArray(R.array.cytaty);
+        quotes = getResources().getStringArray(R.array.quotes);
+
+        /*
+        final Animation animation;
+        animation = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
+                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
+                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
+                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000));
+        animation.setDuration(6000);
+        animation.setFillAfter(true);
+        */
+
         final Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.move2);
         final Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.move3);
         final View view2 = findViewById(R.id.cytat1);
+
         view2.startAnimation(anim2);
 
         anim2.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
-                int randomIndex = new Random().nextInt(cytaty.length);
-                String randomName = cytaty[randomIndex];
-                cytat1.setText(randomName);
+                int randomIndex = new Random().nextInt(quotes.length);
+                String randomName = quotes[randomIndex];
+                quoteText.setText(randomName);
                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                cytat1.setTextColor(color);
+                quoteText.setTextColor(color);
             }
             @Override
             public void onAnimationRepeat(Animation arg0) {
             }
             @Override
             public void onAnimationEnd(Animation arg0) {
-                int randomIndex = new Random().nextInt(cytaty.length);
-                String randomName = cytaty[randomIndex];
-                cytat1.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                cytat1.setTextColor(color);
                 view2.startAnimation(anim3);
             }
         });
@@ -82,17 +92,17 @@ public class MainActivity extends AppCompatActivity {
         anim3.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
+                int randomIndex = new Random().nextInt(quotes.length);
+                String randomName = quotes[randomIndex];
+                quoteText.setText(randomName);
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                quoteText.setTextColor(color);
             }
             @Override
             public void onAnimationRepeat(Animation arg0) {
             }
             @Override
             public void onAnimationEnd(Animation arg0) {
-                int randomIndex = new Random().nextInt(cytaty.length);
-                String randomName = cytaty[randomIndex];
-                cytat1.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                cytat1.setTextColor(color);
                 view2.startAnimation(anim4);
             }
         });
@@ -100,24 +110,30 @@ public class MainActivity extends AppCompatActivity {
         anim4.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
+                int randomIndex = new Random().nextInt(quotes.length);
+                String randomName = quotes[randomIndex];
+                quoteText.setText(randomName);
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                quoteText.setTextColor(color);
             }
             @Override
             public void onAnimationRepeat(Animation arg0) {
             }
             @Override
             public void onAnimationEnd(Animation arg0) {
-                int randomIndex = new Random().nextInt(cytaty.length);
-                String randomName = cytaty[randomIndex];
-                cytat1.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                cytat1.setTextColor(color);
-                startService(new Intent(getApplicationContext(), Sounds.class));
                 view2.startAnimation(anim2);
             }
         });
 
         loadPref();
         initialize();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                startService(new Intent(getApplicationContext(), Sounds.class));
+            }
+        }, 0, 90000);
 
         Thread thread = new Thread() {
             public void run() {
@@ -141,6 +157,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         thread.start();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        stopService(new Intent(this, Music.class));
+        stopService(new Intent(this, Sounds.class));
     }
 
     public void loadPref() {
@@ -176,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         dpsAndDpcView = (TextView) findViewById(R.id.dpsAndDpcView);
             dpsAndDpcView.setText(dps +"$/sek" + System.getProperty ("line.separator") + dpc + "$/klik");
 
-        cytat1 = (TextView) findViewById(R.id.cytat1);
+        quoteText = (TextView) findViewById(R.id.cytat1);
 
         czapka = (ImageView) findViewById(R.id.czapka);
 

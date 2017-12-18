@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Tracz Clicker</string>
 
-    <string-array name="cytaty">
+    <string-array name="quotes">
         <item>Nie odmawia się, kiedy pieniądz woła.</item>
         <item>Dobry klecha to martwy klecha.</item>
         <item>Cała umiejętność polega na tym, żeby wiedzieć, co komu obiecać.</item>
         <item>Zemsta jest rozkoszą bogów.</item>
         <item>Nie pracuję na godziny, ja wyrządzam zło na akord.</item>
-        <item>Jestem zły, brutalny i nikczemny.</item>
-        <item>Bardziej niż księdza nie znoszę tej instytucji, której ksiądz służy.</item>
+        <item>Jestem zły, brutalny i nikczemny. Z tego żyję!</item>
+        <item>Ojcowizna? Bardzo ładnie, nazwę możemy zostawić.</item>
         <item>Ja za nic nie muszę płacić, zawsze biorę sam co zechcę.</item>
         <item>Szanuj wroga swego, bo możesz mieć gorszego.</item>
         <item>Czas to pieniądz.</item>
