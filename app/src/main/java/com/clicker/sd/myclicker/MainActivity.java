@@ -3,6 +3,7 @@ package com.clicker.sd.myclicker;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.view.View;
 import android.preference.PreferenceManager;
 import android.widget.Button;
@@ -35,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
     public static TextView dotsView;
     public static TextView dpsAndDpcView;
     public static TextView quoteText;
-    public static ImageView czapka;
+    public static ImageView tesc;
+
+    int [] songs;
+    int random_index;
+
+    private MediaPlayer mp1;
+    private MediaPlayer mp2;
 
     Random rnd = new Random();
     Timer timer = new Timer();
@@ -49,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, Music.class));
-
         quotes = getResources().getStringArray(R.array.quotes);
+
+        songs = new int[] {R.raw.theme,R.raw.janusztracz,R.raw.remix};
+        random_index = songs.length;
 
         /*
         final Animation animation;
@@ -85,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onAnimationEnd(Animation arg0) {
+
                 view2.startAnimation(anim3);
             }
         });
@@ -127,11 +136,18 @@ public class MainActivity extends AppCompatActivity {
 
         loadPref();
         initialize();
+        music();
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                startService(new Intent(getApplicationContext(), Sounds.class));
+                int[] sounds={R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
+                Random r = new Random();
+                int Low = 0;
+                int High = 23;
+                int rndm = r.nextInt(High-Low) + Low;
+                mp1 = MediaPlayer.create(getApplicationContext(),sounds[rndm]);
+                mp1.start();
             }
         }, 0, 90000);
 
@@ -146,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 dot += dps;
                                 dotsView.setText(dot + "$");
-
                                 savePref(dotKeyString, dot);
                             }
                         });
@@ -157,14 +172,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         thread.start();
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        stopService(new Intent(this, Music.class));
-        stopService(new Intent(this, Sounds.class));
     }
 
     public void loadPref() {
@@ -202,12 +209,12 @@ public class MainActivity extends AppCompatActivity {
 
         quoteText = (TextView) findViewById(R.id.quoteText);
 
-        czapka = (ImageView) findViewById(R.id.czapka);
+        tesc = (ImageView) findViewById(R.id.tesc);
 
         Button shopBtn = (Button) findViewById(R.id.shopBtn);
 
         if (ShopDecorations.shopDecBought == 1) {
-            czapka.setVisibility(View.VISIBLE);
+            tesc.setVisibility(View.VISIBLE);
         }
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +245,21 @@ public class MainActivity extends AppCompatActivity {
 
         dotBtn = (ImageButton) findViewById(R.id.dotBtn);
 
+    }
+
+    public void music(){
+
+        mp2 = MediaPlayer.create(getApplicationContext(), songs[rnd.nextInt(random_index)]);
+        if(!mp2.isPlaying()) {
+            mp2 = MediaPlayer.create(getApplicationContext(), songs[rnd.nextInt(random_index)]);
+            mp2.start();
+        }
+
+        mp2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                music();
+            }
+        });
     }
 
     public void dotBtn(View v){

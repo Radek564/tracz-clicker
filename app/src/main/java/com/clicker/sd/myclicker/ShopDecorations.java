@@ -78,7 +78,7 @@ public class ShopDecorations extends Activity {
             MainActivity.dot -= shopDec;
 
             shopDecBought = 1;
-            MainActivity.czapka.setVisibility(View.VISIBLE);
+            MainActivity.tesc.setVisibility(View.VISIBLE);
             shopDecBtn.setAlpha(.5f);
             shopDecBtn.setEnabled(false);
             shopDecBtnText.setText("Wykupiono!");

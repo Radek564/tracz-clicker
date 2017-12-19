@@ -28,7 +28,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:onClick="shopDec"
-        android:text="Czapka świąteczna"
+        android:text="Teść Tracza"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:shadowColor="#000000"
