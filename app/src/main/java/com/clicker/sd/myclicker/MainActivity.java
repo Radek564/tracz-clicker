@@ -1,5 +1,7 @@
 package com.clicker.sd.myclicker;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public static TextView dpsAndDpcView;
     public static TextView quoteText;
     public static ImageView tesc;
+    public ImageView background;
 
     int [] songs;
     int random_index;
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp2;
 
     Random rnd = new Random();
+    Random rnd2 = new Random();
+
     Timer timer = new Timer();
 
     public ImageButton dotBtn;
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         final Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.move2);
         final Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.move3);
+
         final View view2 = findViewById(R.id.quoteText);
 
         view2.startAnimation(anim2);
@@ -138,6 +144,10 @@ public class MainActivity extends AppCompatActivity {
         initialize();
         music();
 
+        if (dot >= 100000) {
+            background();
+        }
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -149,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 mp1 = MediaPlayer.create(getApplicationContext(),sounds[rndm]);
                 mp1.start();
             }
-        }, 0, 90000);
+        }, 0, 30000);
 
         Thread thread = new Thread() {
             public void run() {
@@ -160,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (dot >= 100000) {
+                                    colortransition();
+                                }
                                 dot += dps;
                                 dotsView.setText(dot + "$");
                                 savePref(dotKeyString, dot);
@@ -213,6 +226,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button shopBtn = (Button) findViewById(R.id.shopBtn);
 
+        background = (ImageView) findViewById(R.id.mainbackground);
+
+        if (dot >= 100000) {
+            final Animation anim5 = AnimationUtils.loadAnimation(this, R.anim.scalein);
+            final View view = findViewById(R.id.mainbackground);
+            view.startAnimation(anim5);
+        }
+
         if (ShopDecorations.shopDecBought == 1) {
             tesc.setVisibility(View.VISIBLE);
         }
@@ -247,13 +268,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    int colorFrom = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+    public void background() {
+        background.setColorFilter(colorFrom, android.graphics.PorterDuff.Mode.MULTIPLY);
+    }
+
+    public void colortransition() {
+        int colorTo = Color.argb(255, rnd2.nextInt(256), rnd2.nextInt(256), rnd2.nextInt(256));
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorFrom = colorTo;
+        colorAnimation.setDuration(1000);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                background.setColorFilter((int) animator.getAnimatedValue(), android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
+
+        });
+        colorAnimation.start();
+    }
+
     public void music(){
 
         mp2 = MediaPlayer.create(getApplicationContext(), songs[rnd.nextInt(random_index)]);
-        if(!mp2.isPlaying()) {
-            mp2 = MediaPlayer.create(getApplicationContext(), songs[rnd.nextInt(random_index)]);
-            mp2.start();
-        }
+        mp2.start();
 
         mp2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
@@ -265,12 +305,19 @@ public class MainActivity extends AppCompatActivity {
     public void dotBtn(View v){
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
         final View view = findViewById(R.id.dotBtn);
+
         view.startAnimation(anim);
 
         dot += dpc;
         dotsView.setText(dot + "$");
 
         savePref(dotKeyString, dot);
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        mp1.release();
+        mp2.release();
     }
 
 }
