@@ -8,6 +8,11 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.preference.PreferenceManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     Random rnd2 = new Random();
 
     Timer timer = new Timer();
+    Timer timer2 = new Timer();
+    Timer timer3 = new Timer();
 
     public ImageButton dotBtn;
 
@@ -63,86 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
         quotes = getResources().getStringArray(R.array.quotes);
 
-        songs = new int[] {R.raw.theme,R.raw.janusztracz,R.raw.remix};
+        songs = new int[] {R.raw.janusztracz,R.raw.remix,R.raw.mcclogg};
         random_index = songs.length;
-
-        /*
-        final Animation animation;
-        animation = new TranslateAnimation(
-                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
-                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
-                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000),
-                TranslateAnimation.ABSOLUTE,rnd.nextInt(1000));
-        animation.setDuration(6000);
-        animation.setFillAfter(true);
-        */
-
-        final Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.move);
-        final Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.move2);
-        final Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.move3);
-
-        final View view2 = findViewById(R.id.quoteText);
-
-        view2.startAnimation(anim2);
-
-        anim2.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-                int randomIndex = new Random().nextInt(quotes.length);
-                String randomName = quotes[randomIndex];
-                quoteText.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                quoteText.setTextColor(color);
-            }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-
-                view2.startAnimation(anim3);
-            }
-        });
-
-        anim3.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-                int randomIndex = new Random().nextInt(quotes.length);
-                String randomName = quotes[randomIndex];
-                quoteText.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                quoteText.setTextColor(color);
-            }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                view2.startAnimation(anim4);
-            }
-        });
-
-        anim4.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-                int randomIndex = new Random().nextInt(quotes.length);
-                String randomName = quotes[randomIndex];
-                quoteText.setText(randomName);
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                quoteText.setTextColor(color);
-            }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                view2.startAnimation(anim2);
-            }
-        });
 
         loadPref();
         initialize();
         music();
+        animationQuote();
 
         if (dot >= 100000) {
             background();
@@ -161,6 +95,36 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 0, 30000);
 
+        timer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (dot >= 100000) {
+                                    final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+                                    final View view = findViewById(R.id.mainbackground);
+                                    view.startAnimation(anim5);
+                                }
+                            }
+                        });
+            }
+        }, 0, 600);
+
+        timer3.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (dot >= 100000) {
+                            colortransition();
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
+
         Thread thread = new Thread() {
             public void run() {
                 try {
@@ -170,9 +134,6 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (dot >= 100000) {
-                                    colortransition();
-                                }
                                 dot += dps;
                                 dotsView.setText(dot + "$");
                                 savePref(dotKeyString, dot);
@@ -228,11 +189,6 @@ public class MainActivity extends AppCompatActivity {
 
         background = (ImageView) findViewById(R.id.mainbackground);
 
-        if (dot >= 100000) {
-            final Animation anim5 = AnimationUtils.loadAnimation(this, R.anim.scalein);
-            final View view = findViewById(R.id.mainbackground);
-            view.startAnimation(anim5);
-        }
 
         if (ShopDecorations.shopDecBought == 1) {
             tesc.setVisibility(View.VISIBLE);
@@ -301,6 +257,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void animationQuote(){
+        float minStartX = 0.0f;
+        float maxStartX = 1.0f;
+        float minX = -1.0f;
+        float maxX = 1.0f;
+        float minStartY = 0.0f;
+        float maxStartY = 1.0f;
+        float minY = -1.0f;
+        float maxY = 1.0f;
+        final Animation animation;
+        final Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+
+        int randomIndex = new Random().nextInt(quotes.length);
+        String randomName = quotes[randomIndex];
+        quoteText.setText(randomName);
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        quoteText.setTextColor(color);
+
+        animation = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxStartX - minStartX) + minStartX,
+                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxX - minX) + minX,
+                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxStartY - minStartY) + minStartY,
+                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxY - minY) + minY);
+
+        animation.setDuration(6000);
+        animation.setFillAfter(true);
+        animation.setInterpolator(new LinearInterpolator());
+
+        quoteText.startAnimation(animation);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                quoteText.startAnimation(fade_out);
+            }
+        });
+
+        fade_out.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                animationQuote();
+            }
+        });}
 
     public void dotBtn(View v){
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
