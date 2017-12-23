@@ -1,5 +1,7 @@
 package com.clicker.sd.myclicker;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
@@ -8,9 +10,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.preference.PreferenceManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -44,20 +43,21 @@ public class MainActivity extends AppCompatActivity {
     public static TextView dpsAndDpcView;
     public static TextView quoteText;
     public static ImageView tesc;
+    public static ImageView panwalencik;
+    public static ImageView wikary;
+    public static ImageView czapka;
     public ImageView background;
 
     int [] songs;
     int random_index;
 
-    private MediaPlayer mp1;
-    private MediaPlayer mp2;
+    public static MediaPlayer mp1;
+    public static MediaPlayer mp2;
 
     Random rnd = new Random();
     Random rnd2 = new Random();
 
-    Timer timer = new Timer();
-    Timer timer2 = new Timer();
-    Timer timer3 = new Timer();
+    static Timer timer = new Timer();
 
     public ImageButton dotBtn;
 
@@ -73,57 +73,26 @@ public class MainActivity extends AppCompatActivity {
         songs = new int[] {R.raw.janusztracz,R.raw.remix,R.raw.mcclogg};
         random_index = songs.length;
 
+        final int[] sounds={R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
+        final int rndm = rnd.nextInt(sounds.length);
+
         loadPref();
         initialize();
         music();
         animationQuote();
 
-        if (dot >= 100000) {
-            background();
-        }
-
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                int[] sounds={R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
-                Random r = new Random();
-                int Low = 0;
-                int High = 23;
-                int rndm = r.nextInt(High-Low) + Low;
                 mp1 = MediaPlayer.create(getApplicationContext(),sounds[rndm]);
+                if (Config.checkingSound) {
+                    mp1.setVolume(1, 1);
+                } else {
+                    mp1.setVolume(0, 0);
+                }
                 mp1.start();
             }
         }, 0, 30000);
-
-        timer2.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (dot >= 100000) {
-                                    final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
-                                    final View view = findViewById(R.id.mainbackground);
-                                    view.startAnimation(anim5);
-                                }
-                            }
-                        });
-            }
-        }, 0, 600);
-
-        timer3.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dot >= 100000) {
-                            colortransition();
-                        }
-                    }
-                });
-            }
-        }, 0, 1000);
 
         Thread thread = new Thread() {
             public void run() {
@@ -145,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
         thread.start();
     }
 
@@ -163,6 +133,20 @@ public class MainActivity extends AppCompatActivity {
         long shopDecBoughtKey = sharedPref.getLong(ShopDecorations.shopDecBoughtKeyString, 0);
             ShopDecorations.shopDecBought = shopDecBoughtKey;
 
+        long shopDec2BoughtKey = sharedPref.getLong(ShopDecorations.shopDec2BoughtKeyString, 0);
+        ShopDecorations.shopDec2Bought = shopDec2BoughtKey;
+
+        long shopDec3BoughtKey = sharedPref.getLong(ShopDecorations.shopDec3BoughtKeyString, 0);
+        ShopDecorations.shopDec3Bought = shopDec3BoughtKey;
+
+        long shopDec4BoughtKey = sharedPref.getLong(ShopDecorations.shopDec4BoughtKeyString, 0);
+        ShopDecorations.shopDec4Bought = shopDec4BoughtKey;
+
+        boolean checkingMusicKey = sharedPref.getBoolean(Config.checkingMusicKeyString, true);
+        Config.checkingMusic = checkingMusicKey;
+
+        boolean checkingSoundKey = sharedPref.getBoolean(Config.checkingSoundKeyString, true);
+        Config.checkingSound = checkingSoundKey;
     }
 
     public void savePref(String key, long value) {
@@ -185,13 +169,38 @@ public class MainActivity extends AppCompatActivity {
 
         tesc = (ImageView) findViewById(R.id.tesc);
 
+        panwalencik = (ImageView) findViewById(R.id.panwalencik);
+
+        wikary = (ImageView) findViewById(R.id.wikary);
+
+        czapka = (ImageView) findViewById(R.id.czapka);
+
         Button shopBtn = (Button) findViewById(R.id.shopBtn);
 
         background = (ImageView) findViewById(R.id.mainbackground);
 
+        final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+
+        if (dot >= 100000) {
+            colortransition();
+        } else {
+            background.clearColorFilter();
+        }
 
         if (ShopDecorations.shopDecBought == 1) {
             tesc.setVisibility(View.VISIBLE);
+        }
+
+        if (ShopDecorations.shopDec2Bought == 1) {
+            panwalencik.setVisibility(View.VISIBLE);
+        }
+
+        if (ShopDecorations.shopDec3Bought == 1) {
+            wikary.setVisibility(View.VISIBLE);
+        }
+
+        if (ShopDecorations.shopDec4Bought == 1) {
+            czapka.setVisibility(View.VISIBLE);
         }
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
@@ -215,8 +224,16 @@ public class MainActivity extends AppCompatActivity {
         shopBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "Strona w budowie!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, ShopDecorations.class));
+            }
+        });
+
+        ImageButton configBtn = (ImageButton) findViewById(R.id.configBtn);
+
+        configBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Config.class));
             }
         });
 
@@ -225,10 +242,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     int colorFrom = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
-    public void background() {
-        background.setColorFilter(colorFrom, android.graphics.PorterDuff.Mode.MULTIPLY);
-    }
 
     public void colortransition() {
         int colorTo = Color.argb(255, rnd2.nextInt(256), rnd2.nextInt(256), rnd2.nextInt(256));
@@ -243,12 +256,25 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        colorAnimation.addListener(new AnimatorListenerAdapter()
+        {
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                colortransition();
+            }
+        });
         colorAnimation.start();
     }
 
     public void music(){
-
         mp2 = MediaPlayer.create(getApplicationContext(), songs[rnd.nextInt(random_index)]);
+        if (Config.checkingMusic) {
+            mp2.setVolume(1, 1);
+        } else {
+            mp2.setVolume(0, 0);
+        }
         mp2.start();
 
         mp2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -258,17 +284,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    float minStartX = 0.0f;
+    float maxStartX = 1.0f;
+    float minX = -1.0f;
+    float maxX = 2.0f;
+    float minStartY = 0.0f;
+    float maxStartY = 1.0f;
+    float minY = -1.0f;
+    float maxY = 2.0f;
+    Animation animation;
+
     public void animationQuote(){
-        float minStartX = 0.0f;
-        float maxStartX = 1.0f;
-        float minX = -1.0f;
-        float maxX = 1.0f;
-        float minStartY = 0.0f;
-        float maxStartY = 1.0f;
-        float minY = -1.0f;
-        float maxY = 1.0f;
-        final Animation animation;
-        final Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
         int randomIndex = new Random().nextInt(quotes.length);
         String randomName = quotes[randomIndex];
@@ -277,10 +303,10 @@ public class MainActivity extends AppCompatActivity {
         quoteText.setTextColor(color);
 
         animation = new TranslateAnimation(
-                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxStartX - minStartX) + minStartX,
-                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxX - minX) + minX,
-                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxStartY - minStartY) + minStartY,
-                TranslateAnimation.RELATIVE_TO_PARENT,new Random().nextFloat() * (maxY - minY) + minY);
+                TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxStartX - minStartX) + minStartX,
+                TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxX - minX) + minX,
+                TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxStartY - minStartY) + minStartY,
+                TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxY - minY) + minY);
 
         animation.setDuration(6000);
         animation.setFillAfter(true);
@@ -297,28 +323,16 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onAnimationEnd(Animation arg0) {
-                quoteText.startAnimation(fade_out);
-            }
-        });
-
-        fade_out.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
                 animationQuote();
             }
-        });}
+        });
+    }
 
     public void dotBtn(View v){
-        final Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
-        final View view = findViewById(R.id.dotBtn);
 
-        view.startAnimation(anim);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
+
+        dotBtn.startAnimation(anim);
 
         dot += dpc;
         dotsView.setText(dot + "$");

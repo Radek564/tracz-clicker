@@ -81,7 +81,7 @@ public class ShopSecond extends Activity {
         //Views
         shopDpsBtn = (Button) findViewById(R.id.shopDps);
         shopDpsBtnText = (TextView) findViewById(R.id.shopDpstext);
-        shopDpsBtnText.setText(shopDps + "$ | +1$ na sekundę");
+        shopDpsBtnText.setText(shopDps + "$ | +10$ na sekundę");
 
         shopDps2Btn = (Button) findViewById(R.id.shopDps2);
         shopDps2BtnText = (TextView) findViewById(R.id.shopDps2text);
@@ -100,11 +100,11 @@ public class ShopSecond extends Activity {
     public void shopDps(View v){
         if(MainActivity.dot >= shopDps){
             MainActivity.dot -= shopDps;
-            MainActivity.dps += 1;
+            MainActivity.dps += 10;
 
             shopDps *= 1.5;
 
-            shopDpsBtnText.setText(shopDps + "$ | +1$ na sekundę");
+            shopDpsBtnText.setText(shopDps + "$ | +10$ na sekundę");
             MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
             MainActivity.dotsView.setText(MainActivity.dot + "$");
 

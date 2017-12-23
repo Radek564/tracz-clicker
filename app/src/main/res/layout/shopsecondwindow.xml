@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="centerCrop"
-    android:background="@drawable/layout_bg">
+    tools:ignore="contentDescription">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/shopbackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/plebania" />
     </FrameLayout>
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:onClick="shopDps"
-        android:text="Pałacyk"
+        android:text="Browar"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:shadowColor="#000000"
@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxLines="1"
-        android:text="500$ | +1$ na sekundę"
+        android:text="500$ | +10$ na sekundę"
         android:textColor="#ffffff"
         android:textSize="15sp"
         android:shadowColor="#000000"
@@ -92,7 +92,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:onClick="shopDps3"
-        android:text="Browar"
+        android:text="Pałacyk"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:shadowColor="#000000"
