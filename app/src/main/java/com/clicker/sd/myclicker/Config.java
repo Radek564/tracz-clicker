@@ -55,7 +55,6 @@ public class Config extends Activity implements View.OnClickListener {
                 } else {
                     MainActivity.mp2.setVolume(0,0);
                 }
-                savePref(checkingMusicKeyString, checkingMusic);
                 savePref(checkingMusicKeyString, music.isChecked());
                 break;
             case R.id.soundBox:
@@ -65,7 +64,6 @@ public class Config extends Activity implements View.OnClickListener {
                 } else {
                     MainActivity.mp1.setVolume(0,0);
                 }
-                savePref(checkingSoundKeyString, checkingSound);
                 savePref(checkingSoundKeyString, sound.isChecked());
                 break;
         }
@@ -73,11 +71,14 @@ public class Config extends Activity implements View.OnClickListener {
     int [] songs = new int[] {R.raw.janusztracz,R.raw.remix,R.raw.mcclogg};
     int random_index = songs.length;
 
+    int[] sounds = {R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
+    int random_index2 = sounds.length;
+
     public void randomSongBtn(View v) {
-        music();
+        randommusic();
     }
 
-    public void music(){
+    public void randommusic(){
         MainActivity.mp2.release();
         MainActivity.mp2 = MediaPlayer.create(getApplicationContext(), songs[new Random().nextInt(random_index)]);
         if (music.isChecked()) {
@@ -89,17 +90,14 @@ public class Config extends Activity implements View.OnClickListener {
 
         MainActivity.mp2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
-                music();
-
+                randommusic();
             }
         });
     }
 
-    public void randomSoundBtn(View v) {
-        final int[] sounds={R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
-        final int rndm = new Random().nextInt(sounds.length);
+    public void randomsound() {
         MainActivity.mp1.release();
-        MainActivity.mp1 = MediaPlayer.create(getApplicationContext(),sounds[rndm]);
+        MainActivity.mp1 = MediaPlayer.create(getApplicationContext(), sounds[new Random().nextInt(random_index2)]);
         if (sound.isChecked()) {
             MainActivity.mp1.setVolume(1, 1);
         } else {
@@ -108,15 +106,17 @@ public class Config extends Activity implements View.OnClickListener {
         MainActivity.mp1.start();
     }
 
+    public void randomSoundBtn(View v) {
+        randomsound();
+    }
+
     public void loadPref() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         boolean checkingMusicKey = sharedPref.getBoolean(checkingMusicKeyString, true);
-        checkingMusic = checkingMusicKey;
         music.setChecked(checkingMusicKey);
 
         boolean checkingSoundKey = sharedPref.getBoolean(checkingSoundKeyString, true);
-        checkingSound = checkingSoundKey;
         sound.setChecked(checkingSoundKey);
     }
 

@@ -5,11 +5,13 @@ import android.content.SharedPreferences.Editor;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.preference.PreferenceManager;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ShopSecond extends Activity {
 
@@ -24,15 +26,7 @@ public class ShopSecond extends Activity {
     public long shopDps4;
     public String shopDps4KeyString = "shopDps4";
 
-    public Button shopDpsBtn;
-    public Button shopDps2Btn;
-    public Button shopDps3Btn;
-    public Button shopDps4Btn;
-
-    public TextView shopDpsBtnText;
-    public TextView shopDps2BtnText;
-    public TextView shopDps3BtnText;
-    public TextView shopDps4BtnText;
+    private CustomListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +44,135 @@ public class ShopSecond extends Activity {
         loadPref();
         initialize();
 
+        ArrayList image_details = getListData();
+        final ListView lv1 = (ListView) findViewById(R.id.holdingsList);
+        lv1.setAdapter(adapter = new CustomListAdapter(this, image_details));
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = lv1.getItemAtPosition(position);
+                HoldingsItem holdingsData = (HoldingsItem) o;
+            }
+        });
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = lv1.getItemAtPosition(position);
+                HoldingsItem holdingsData = (HoldingsItem) o;
+                if (id == 0) {
+                    if(MainActivity.dot >= shopDps){
+                        MainActivity.dot -= shopDps;
+                        MainActivity.dps += 10;
+
+                        shopDps *= 1.5;
+
+                        holdingsData.setDescription(shopDps + "$ | +10$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpsKeyString, shopDps);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 1) {
+                    if(MainActivity.dot >= shopDps2){
+                        MainActivity.dot -= shopDps2;
+                        MainActivity.dps += 50;
+
+                        shopDps2 *= 1.5;
+
+                        holdingsData.setDescription(shopDps2 + "$ | +50$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps2KeyString, shopDps2);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 2) {
+                    if(MainActivity.dot >= shopDps3){
+                        MainActivity.dot -= shopDps3;
+                        MainActivity.dps += 100;
+
+                        shopDps3 *= 1.5;
+
+                        holdingsData.setDescription(shopDps3 + "$ | +100$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps3KeyString, shopDps3);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 3) {
+                    if(MainActivity.dot >= shopDps4){
+                        MainActivity.dot -= shopDps4;
+                        MainActivity.dps += 150;
+
+                        shopDps4 *= 1.5;
+
+                        holdingsData.setDescription(shopDps4 + "$ | +150$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps4KeyString, shopDps4);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+    }
+
+    public ArrayList getListData() {
+        ArrayList<HoldingsItem> results = new ArrayList<HoldingsItem>();
+        HoldingsItem holdingsData = new HoldingsItem();
+        holdingsData.setName("Browar");
+        holdingsData.setDescription(shopDps+"$ | +10$ na sekundę");
+        results.add(holdingsData);
+
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Ojcowizna");
+        holdingsData.setDescription(shopDps2+"$ | +50$ na sekundę");
+        results.add(holdingsData);
+
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Pałacyk");
+        holdingsData.setDescription(shopDps3+"$ | +100$ na sekundę");
+        results.add(holdingsData);
+
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Plebania");
+        holdingsData.setDescription(shopDps4+"$ | +150$ na sekundę");
+        results.add(holdingsData);
+
+        return results;
     }
 
     public void loadPref() {
@@ -79,102 +202,7 @@ public class ShopSecond extends Activity {
 
     public void initialize() {
         //Views
-        shopDpsBtn = (Button) findViewById(R.id.shopDps);
-        shopDpsBtnText = (TextView) findViewById(R.id.shopDpstext);
-        shopDpsBtnText.setText(shopDps + "$ | +10$ na sekundę");
 
-        shopDps2Btn = (Button) findViewById(R.id.shopDps2);
-        shopDps2BtnText = (TextView) findViewById(R.id.shopDps2text);
-        shopDps2BtnText.setText(shopDps2 + "$ | +50$ na sekundę");
-
-        shopDps3Btn = (Button) findViewById(R.id.shopDps3);
-        shopDps3BtnText = (TextView) findViewById(R.id.shopDps3text);
-        shopDps3BtnText.setText(shopDps3 + "$ | +100$ na sekundę");
-
-        shopDps4Btn = (Button) findViewById(R.id.shopDps4);
-        shopDps4BtnText = (TextView) findViewById(R.id.shopDps4text);
-        shopDps4BtnText.setText(shopDps4 + "$ | +150$ na sekundę");
-
-    }
-
-    public void shopDps(View v){
-        if(MainActivity.dot >= shopDps){
-            MainActivity.dot -= shopDps;
-            MainActivity.dps += 10;
-
-            shopDps *= 1.5;
-
-            shopDpsBtnText.setText(shopDps + "$ | +10$ na sekundę");
-            MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDpsKeyString, shopDps);
-            savePref(MainActivity.dpsKeyString, MainActivity.dps);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDps2(View v){
-        if(MainActivity.dot >= shopDps2){
-            MainActivity.dot -= shopDps2;
-            MainActivity.dps += 50;
-
-            shopDps2 *= 1.5;
-
-            shopDps2BtnText.setText(shopDps2 + "$ | +50$ na sekundę");
-            MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDps2KeyString, shopDps2);
-            savePref(MainActivity.dpsKeyString, MainActivity.dps);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDps3(View v){
-        if(MainActivity.dot >= shopDps3){
-            MainActivity.dot -= shopDps3;
-            MainActivity.dps += 100;
-
-            shopDps3 *= 1.5;
-
-            shopDps3BtnText.setText(shopDps3 + "$ | +100$ na sekundę");
-            MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDps3KeyString, shopDps3);
-            savePref(MainActivity.dpsKeyString, MainActivity.dps);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDps4(View v){
-        if(MainActivity.dot >= shopDps4){
-            MainActivity.dot -= shopDps4;
-            MainActivity.dps += 150;
-
-            shopDps4 *= 1.5;
-
-            shopDps4BtnText.setText(shopDps4 + "$ | +150$ na sekundę");
-            MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDps4KeyString, shopDps4);
-            savePref(MainActivity.dpsKeyString, MainActivity.dps);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

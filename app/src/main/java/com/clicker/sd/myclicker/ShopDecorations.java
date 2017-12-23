@@ -2,14 +2,17 @@ package com.clicker.sd.myclicker;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.preference.PreferenceManager;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ShopDecorations extends Activity {
 
@@ -19,31 +22,23 @@ public class ShopDecorations extends Activity {
     public static long shopDecBought;
     public String shopDecKeyString = "shopDec";
     public static String shopDecBoughtKeyString = "shopDecBought";
-    public Button shopDecBtn;
 
     public long shopDec2;
     public static long shopDec2Bought;
     public String shopDec2KeyString = "shopDec2";
     public static String shopDec2BoughtKeyString = "shopDec2Bought";
-    public Button shopDec2Btn;
 
     public long shopDec3;
     public static long shopDec3Bought;
     public String shopDec3KeyString = "shopDec3";
     public static String shopDec3BoughtKeyString = "shopDec3Bought";
-    public Button shopDec3Btn;
 
     public long shopDec4;
     public static long shopDec4Bought;
     public String shopDec4KeyString = "shopDec4";
     public static String shopDec4BoughtKeyString = "shopDec4Bought";
-    public Button shopDec4Btn;
 
-    //Views
-    public TextView shopDecBtnText;
-    public TextView shopDec2BtnText;
-    public TextView shopDec3BtnText;
-    public TextView shopDec4BtnText;
+    private CustomListAdapter3 adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +54,134 @@ public class ShopDecorations extends Activity {
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
         loadPref();
-        initialize();
 
+        ArrayList image_details = getListData();
+        final ListView lv1 = (ListView) findViewById(R.id.decorationsList);
+
+        lv1.setAdapter(adapter = new CustomListAdapter3(this, image_details));
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = lv1.getItemAtPosition(position);
+                DecorationsItem decorationsData = (DecorationsItem) o;
+            }
+
+
+        });
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = lv1.getItemAtPosition(position);
+                DecorationsItem decorationsData = (DecorationsItem) o;
+                lv1.isEnabled();
+                if (id == 0) {
+                    if(MainActivity.dot >= shopDec){
+                        MainActivity.dot -= shopDec;
+
+                        shopDecBought = 1;
+                        MainActivity.tesc.setVisibility(View.VISIBLE);
+                        decorationsData.setDescription("Wykupiono!");
+                        adapter.notifyDataSetChanged();
+
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDecBoughtKeyString, shopDecBought);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 1) {
+                    if(MainActivity.dot >= shopDec2){
+                        MainActivity.dot -= shopDec2;
+
+                        shopDec2Bought = 1;
+                        MainActivity.panwalencik.setVisibility(View.VISIBLE);
+                        decorationsData.setDescription("Wykupiono!");
+                        adapter.notifyDataSetChanged();
+
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDec2BoughtKeyString, shopDec2Bought);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 2) {
+                    if(MainActivity.dot >= shopDec3){
+                        MainActivity.dot -= shopDec3;
+
+                        shopDec3Bought = 1;
+                        MainActivity.wikary.setVisibility(View.VISIBLE);
+                        decorationsData.setDescription("Wykupiono!");
+                        adapter.notifyDataSetChanged();
+
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDec3BoughtKeyString, shopDec3Bought);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 3) {
+                    if(MainActivity.dot >= shopDec4){
+                        MainActivity.dot -= shopDec4;
+
+                        shopDec4Bought = 1;
+                        MainActivity.czapka.setVisibility(View.VISIBLE);
+                        lv1.getChildAt(3).setEnabled(false);
+                        decorationsData.setDescription("Wykupiono!");
+                        adapter.notifyDataSetChanged();
+
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDec4BoughtKeyString, shopDec4Bought);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+    }
+
+    public ArrayList getListData() {
+        ArrayList<DecorationsItem> results = new ArrayList<DecorationsItem>();
+        DecorationsItem decorationsData = new DecorationsItem();
+        decorationsData.setName("Roślinka");
+        decorationsData.setDescription("10000$");
+        results.add(decorationsData);
+
+        decorationsData = new DecorationsItem();
+        decorationsData.setName("Pan Walencik");
+        decorationsData.setDescription("50000$");
+        results.add(decorationsData);
+
+        decorationsData = new DecorationsItem();
+        decorationsData.setName("Wikary");
+        decorationsData.setDescription("100000$");
+        results.add(decorationsData);
+
+        decorationsData = new DecorationsItem();
+        decorationsData.setName("Czapka świąteczna");
+        decorationsData.setDescription("500000$");
+        results.add(decorationsData);
+
+        return results;
     }
 
     public void loadPref() {
@@ -87,138 +208,13 @@ public class ShopDecorations extends Activity {
         shopDec4Bought = shopDec4BoughtKey;
     }
 
+
     public void savePref(String key, long value) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         Editor editor = sharedPref.edit();
         editor.putLong(key, value);
         editor.commit();
-    }
-
-    public void initialize() {
-        //Views
-        shopDecBtn = (Button) findViewById(R.id.shopDec);
-        shopDecBtnText = (TextView) findViewById(R.id.shopDectext);
-
-        shopDec2Btn = (Button) findViewById(R.id.shopDec2);
-        shopDec2BtnText = (TextView) findViewById(R.id.shopDec2text);
-
-        shopDec3Btn = (Button) findViewById(R.id.shopDec3);
-        shopDec3BtnText = (TextView) findViewById(R.id.shopDec3text);
-
-        shopDec4Btn = (Button) findViewById(R.id.shopDec4);
-        shopDec4BtnText = (TextView) findViewById(R.id.shopDec4text);
-
-        if (shopDecBought == 1) {
-            shopDecBtn.setAlpha(.5f);
-            shopDecBtnText.setAlpha(.5f);
-            shopDecBtn.setEnabled(false);
-            shopDecBtnText.setText("Wykupiono!");
-        }
-
-        if (shopDec2Bought == 1) {
-            shopDec2Btn.setAlpha(.5f);
-            shopDec2BtnText.setAlpha(.5f);
-            shopDec2Btn.setEnabled(false);
-            shopDec2BtnText.setText("Wykupiono!");
-        }
-
-        if (shopDec3Bought == 1) {
-            shopDec3Btn.setAlpha(.5f);
-            shopDec3BtnText.setAlpha(.5f);
-            shopDec3Btn.setEnabled(false);
-            shopDec3BtnText.setText("Wykupiono!");
-        }
-
-        if (shopDec4Bought == 1) {
-            shopDec4Btn.setAlpha(.5f);
-            shopDec4BtnText.setAlpha(.5f);
-            shopDec4Btn.setEnabled(false);
-            shopDec4BtnText.setText("Wykupiono!");
-        }
-    }
-
-    public void shopDec(View v){
-        if(MainActivity.dot >= shopDec){
-            MainActivity.dot -= shopDec;
-
-            shopDecBought = 1;
-            MainActivity.tesc.setVisibility(View.VISIBLE);
-            shopDecBtn.setAlpha(.5f);
-            shopDecBtn.setEnabled(false);
-            shopDecBtnText.setText("Wykupiono!");
-
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDecBoughtKeyString, shopDecBought);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDec2(View v){
-        if(MainActivity.dot >= shopDec2){
-            MainActivity.dot -= shopDec2;
-
-            shopDec2Bought = 1;
-            MainActivity.panwalencik.setVisibility(View.VISIBLE);
-            shopDec2Btn.setAlpha(.5f);
-            shopDec2BtnText.setAlpha(.5f);
-            shopDec2Btn.setEnabled(false);
-            shopDec2BtnText.setText("Wykupiono!");
-
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDec2BoughtKeyString, shopDec2Bought);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDec3(View v){
-        if(MainActivity.dot >= shopDec3){
-            MainActivity.dot -= shopDec3;
-
-            shopDec3Bought = 1;
-            MainActivity.wikary.setVisibility(View.VISIBLE);
-            shopDec3Btn.setAlpha(.5f);
-            shopDec3BtnText.setAlpha(.5f);
-            shopDec3Btn.setEnabled(false);
-            shopDec3BtnText.setText("Wykupiono!");
-
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDec3BoughtKeyString, shopDec3Bought);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void shopDec4(View v){
-        if(MainActivity.dot >= shopDec4){
-            MainActivity.dot -= shopDec4;
-
-            shopDec4Bought = 1;
-            MainActivity.czapka.setVisibility(View.VISIBLE);
-            shopDec4Btn.setAlpha(.5f);
-            shopDec4BtnText.setAlpha(.5f);
-            shopDec4Btn.setEnabled(false);
-            shopDec4BtnText.setText("Wykupiono!");
-
-            MainActivity.dotsView.setText(MainActivity.dot + "$");
-
-            savePref(shopDec4BoughtKeyString, shopDec4Bought);
-            savePref(MainActivity.dotKeyString, MainActivity.dot);
-
-        }else{
-            Toast.makeText(this, "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

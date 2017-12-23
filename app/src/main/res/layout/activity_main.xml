@@ -172,7 +172,7 @@
         android:id="@+id/configBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/configshape"
         android:onClick="configBtn"
         android:scaleType="fitCenter"
         android:src="@drawable/config" />

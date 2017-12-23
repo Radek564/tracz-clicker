@@ -73,26 +73,13 @@ public class MainActivity extends AppCompatActivity {
         songs = new int[] {R.raw.janusztracz,R.raw.remix,R.raw.mcclogg};
         random_index = songs.length;
 
-        final int[] sounds={R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
-        final int rndm = rnd.nextInt(sounds.length);
+        final int[] sounds = {R.raw.andzela, R.raw.cena_nie_jest_taka_wazna, R.raw.czas_to_pieniadz,R.raw.czasem_moze_kosztowac_glowe,R.raw.jesli_mdleje_to_niech_robi_to_prywatnie,R.raw.jednak_whisky,R.raw.jestem_niewierzacy,R.raw.jestem_zly_brutalny_nikczemny,R.raw.moj_prestiz_opiera_sie_na_strachu,R.raw.nie_odmawia_sie_kiedy_pieniadz_wola,R.raw.nie_pracuje_na_godziny, R.raw.ojcowizna, R.raw.osa_odprowadz_ksiedza,R.raw.sadzisz_ze_nie_obchodzi_mnie_ich_los,R.raw.sprzeda_mi_swoja_dusze, R.raw.stukniemy_sie, R.raw.taka_dobra_religijna_kobieta,R.raw.to_przeciez_biedni_ludzie,R.raw.tortury_mie_uspokajaja, R.raw.weronika_pana_przekonala, R.raw.wzruszajace,R.raw.zabrac_dobytek,R.raw.zamknij_sie};
+        final int random_index2 = sounds.length;
 
         loadPref();
         initialize();
         music();
         animationQuote();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mp1 = MediaPlayer.create(getApplicationContext(),sounds[rndm]);
-                if (Config.checkingSound) {
-                    mp1.setVolume(1, 1);
-                } else {
-                    mp1.setVolume(0, 0);
-                }
-                mp1.start();
-            }
-        }, 0, 30000);
 
         Thread thread = new Thread() {
             public void run() {
@@ -116,6 +103,19 @@ public class MainActivity extends AppCompatActivity {
         };
 
         thread.start();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mp1 = MediaPlayer.create(getApplicationContext(), sounds[new Random().nextInt(random_index2)]);
+                if (Config.checkingSound) {
+                    mp1.setVolume(1, 1);
+                } else {
+                    mp1.setVolume(0, 0);
+                }
+                mp1.start();
+            }
+        }, 0, 30000);
     }
 
     public void loadPref() {
@@ -180,6 +180,12 @@ public class MainActivity extends AppCompatActivity {
         background = (ImageView) findViewById(R.id.mainbackground);
 
         final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+
+        if (dot >= 50000) {
+            background.startAnimation(anim5);
+        } else {
+            background.clearAnimation();
+        }
 
         if (dot >= 100000) {
             colortransition();
@@ -279,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
         mp2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
+                mp2.release();
                 music();
             }
         });

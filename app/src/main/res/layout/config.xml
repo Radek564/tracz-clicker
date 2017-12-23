@@ -40,6 +40,7 @@
         android:layout_alignLeft="@+id/musicBox"
         android:layout_alignRight="@+id/musicBox"
         android:layout_alignStart="@+id/musicBox"
+        android:layout_marginTop="3dp"
         android:layout_below="@+id/musicBox"
         android:text="Dźwięki"
         android:textColor="#ffffff"
