@@ -1,13 +1,13 @@
 package com.clicker.sd.myclicker;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.preference.PreferenceManager;
 import android.view.animation.LinearInterpolator;
@@ -32,11 +32,22 @@ public class MainActivity extends AppCompatActivity {
     public static long dot;
         public static String dotKeyString = "dots";
 
+    public static long totalDot;
+        public static String totalDotKeyString = "totalDots";
+
+    public static long totalDpc;
+        public static String totalDpcKeyString = "totalDpc";
+
+    public static long totalDps;
+        public static String totalDpsKeyString = "totalDps";
+
     public static long dpc;
         public static String dpcKeyString = "dpc";
 
     public static long dps;
         public static String dpsKeyString = "dps";
+
+    public static double patrimonyBonus;
 
     //Views
     public static TextView dotsView;
@@ -57,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     Random rnd = new Random();
     Random rnd2 = new Random();
 
-    static Timer timer = new Timer();
+    Timer timer = new Timer();
 
     public ImageButton dotBtn;
 
@@ -80,28 +91,6 @@ public class MainActivity extends AppCompatActivity {
         initialize();
         music();
         animationQuote();
-
-        Thread thread = new Thread() {
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dot += dps;
-                                dotsView.setText(dot + "$");
-                                savePref(dotKeyString, dot);
-                            }
-                        });
-                    }
-                } catch (InterruptedException ie) {
-                    ie.printStackTrace();
-                }
-            }
-        };
-
         thread.start();
 
         timer.schedule(new TimerTask() {
@@ -113,16 +102,127 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     mp1.setVolume(0, 0);
                 }
+                if (Config.checkingMusic && Config.checkingSound) {
+                    mp2.setVolume(0.3f, 0.3f);
+                }
                 mp1.start();
+                mp1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+                        if (Config.checkingMusic && Config.checkingSound) {
+                            mp2.setVolume(1, 1);
+                        }
+                    }
+                });
+
             }
         }, 0, 30000);
+
+        final Handler handler = new Handler();
+        Runnable runnableCode = new Runnable() {
+            final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+            @Override
+            public void run() {
+                if (dot >= 100000) {
+                    colortransition();
+                } else {
+                    background.clearColorFilter();
+                }
+
+                if (ShopDecorations.shopDecBought == 1) {
+                    tesc.setVisibility(View.VISIBLE);
+                } else {
+                    tesc.setVisibility(View.INVISIBLE);
+                }
+
+                if (ShopDecorations.shopDec2Bought == 1) {
+                    panwalencik.setVisibility(View.VISIBLE);
+                } else {
+                    panwalencik.setVisibility(View.INVISIBLE);
+                }
+
+                if (ShopDecorations.shopDec3Bought == 1) {
+                    wikary.setVisibility(View.VISIBLE);
+                } else {
+                    wikary.setVisibility(View.INVISIBLE);
+                }
+
+                if (ShopDecorations.shopDec4Bought == 1) {
+                    czapka.setVisibility(View.VISIBLE);
+                } else {
+                    czapka.setVisibility(View.INVISIBLE);
+                }
+
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(runnableCode);
+
+        final Handler handler2 = new Handler();
+        Runnable runnableCode2 = new Runnable() {
+            final Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+            @Override
+            public void run() {
+
+                if (dot >= 50000) {
+                    background.startAnimation(anim);
+                } else {
+                    background.clearAnimation();
+                }
+
+                handler2.postDelayed(this, 600);
+            }
+        };
+        handler2.post(runnableCode2);
+
     }
+
+    Thread thread = new Thread() {
+        public void run() {
+            try {
+                while (!isInterrupted()) {
+                    Thread.sleep(1000);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dot += dps;
+                            totalDot += dps;
+                            totalDps += dps;
+
+                            if (ShopDecorations.shopDec2Bought == 1) {
+                                patrimonyBonus = ShopSecond.patrimonyBought*50*0.1;
+                                dot += patrimonyBonus;
+                                totalDot += patrimonyBonus;
+                                totalDps += patrimonyBonus;
+                            }
+
+                            dotsView.setText(dot + "$");
+                            savePref(dotKeyString, dot);
+                            savePref(totalDotKeyString, totalDot);
+                            savePref(totalDpsKeyString, totalDps);
+                        }
+                    });
+                }
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+        }
+    };
 
     public void loadPref() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         long dotKey = sharedPref.getLong(dotKeyString, 0);
             dot = dotKey;
+
+        long totalDotKey = sharedPref.getLong(totalDotKeyString, 0);
+            totalDot = totalDotKey;
+
+        long totalDpcKey = sharedPref.getLong(totalDpcKeyString, 0);
+            totalDpc = totalDpcKey;
+
+        long totalDpsKey = sharedPref.getLong(totalDpsKeyString, 0);
+            totalDps = totalDpsKey;
 
         long dpcKey = sharedPref.getLong(dpcKeyString, 1);
             dpc = dpcKey;
@@ -147,6 +247,12 @@ public class MainActivity extends AppCompatActivity {
 
         boolean checkingSoundKey = sharedPref.getBoolean(Config.checkingSoundKeyString, true);
         Config.checkingSound = checkingSoundKey;
+
+        long patrimonyBoughtKey = sharedPref.getLong(ShopSecond.patrimonyBoughtKeyString, 0);
+        ShopSecond.patrimonyBought = patrimonyBoughtKey;
+
+        long resetMultiplierKey = sharedPref.getLong(Statistics.resetMultiplierKeyString, 1);
+        Statistics.resetMultiplier = resetMultiplierKey;
     }
 
     public void savePref(String key, long value) {
@@ -177,37 +283,45 @@ public class MainActivity extends AppCompatActivity {
 
         Button shopBtn = (Button) findViewById(R.id.shopBtn);
 
+        dotBtn = (ImageButton) findViewById(R.id.dotBtn);
+
         background = (ImageView) findViewById(R.id.mainbackground);
 
-        final Animation anim5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalein);
+        final Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
 
-        if (dot >= 50000) {
-            background.startAnimation(anim5);
-        } else {
-            background.clearAnimation();
-        }
+        dotBtn.setOnTouchListener(new View.OnTouchListener() {
 
-        if (dot >= 100000) {
-            colortransition();
-        } else {
-            background.clearColorFilter();
-        }
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-        if (ShopDecorations.shopDecBought == 1) {
-            tesc.setVisibility(View.VISIBLE);
-        }
+                if(event.getAction() == (MotionEvent.ACTION_UP)){
+                    dotBtn.startAnimation(anim);
 
-        if (ShopDecorations.shopDec2Bought == 1) {
-            panwalencik.setVisibility(View.VISIBLE);
-        }
+                    dot += dpc;
+                    totalDot += dpc;
+                    totalDpc += dpc;
 
-        if (ShopDecorations.shopDec3Bought == 1) {
-            wikary.setVisibility(View.VISIBLE);
-        }
+                    dotsView.setText(dot + "$");
 
-        if (ShopDecorations.shopDec4Bought == 1) {
-            czapka.setVisibility(View.VISIBLE);
-        }
+                    savePref(dotKeyString, dot);
+                    savePref(totalDotKeyString, totalDot);
+                    savePref(totalDpcKeyString, totalDpc);
+                }
+                else{
+                }
+                return true;
+            }
+        });
+
+        Button button = (Button) findViewById(R.id.button);
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dot += 10000000;
+            }
+        });
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,8 +357,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dotBtn = (ImageButton) findViewById(R.id.dotBtn);
+        ImageButton statsBtn = (ImageButton) findViewById(R.id.statsBtn);
 
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Statistics.class));
+            }
+        });
     }
 
     int colorFrom = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
@@ -261,15 +381,6 @@ public class MainActivity extends AppCompatActivity {
                 background.setColorFilter((int) animator.getAnimatedValue(), android.graphics.PorterDuff.Mode.MULTIPLY);
             }
 
-        });
-
-        colorAnimation.addListener(new AnimatorListenerAdapter()
-        {
-            @Override
-            public void onAnimationEnd(Animator animation)
-            {
-                colortransition();
-            }
         });
         colorAnimation.start();
     }
@@ -335,22 +446,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void dotBtn(View v){
-
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
-
-        dotBtn.startAnimation(anim);
-
-        dot += dpc;
-        dotsView.setText(dot + "$");
-
-        savePref(dotKeyString, dot);
-    }
-
     public void onDestroy(){
         super.onDestroy();
         mp1.release();
         mp2.release();
+        thread.interrupt();
     }
 
 }

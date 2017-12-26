@@ -17,14 +17,16 @@ public class ShopSecond extends Activity {
 
     //Values
 
-    public long shopDps;
-    public String shopDpsKeyString = "shopDps";
-    public long shopDps2;
-    public String shopDps2KeyString = "shopDps2";
-    public long shopDps3;
-    public String shopDps3KeyString = "shopDps3";
-    public long shopDps4;
-    public String shopDps4KeyString = "shopDps4";
+    public static long shopDps;
+    public static String shopDpsKeyString = "shopDps";
+    public static long shopDps2;
+    public static String shopDps2KeyString = "shopDps2";
+    public static long shopDps3;
+    public static String shopDps3KeyString = "shopDps3";
+    public static long shopDps4;
+    public static String shopDps4KeyString = "shopDps4";
+    public static long patrimonyBought;
+    public static String patrimonyBoughtKeyString = "patrimonyBought";
 
     private CustomListAdapter adapter;
 
@@ -65,11 +67,11 @@ public class ShopSecond extends Activity {
                 if (id == 0) {
                     if(MainActivity.dot >= shopDps){
                         MainActivity.dot -= shopDps;
-                        MainActivity.dps += 10;
+                        MainActivity.dps += (10 * Statistics.resetMultiplier);
 
                         shopDps *= 1.5;
 
-                        holdingsData.setDescription(shopDps + "$ | +10$ na sekundę");
+                        holdingsData.setDescription(shopDps+"$ | +" + (10 * Statistics.resetMultiplier) + "$ na sekundę");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -86,16 +88,18 @@ public class ShopSecond extends Activity {
                 if (id == 1) {
                     if(MainActivity.dot >= shopDps2){
                         MainActivity.dot -= shopDps2;
-                        MainActivity.dps += 50;
+                        MainActivity.dps += (50 * Statistics.resetMultiplier);
+                        patrimonyBought += 1;
 
                         shopDps2 *= 1.5;
 
-                        holdingsData.setDescription(shopDps2 + "$ | +50$ na sekundę");
+                        holdingsData.setDescription(shopDps2+"$ | +" + (50 * Statistics.resetMultiplier) + "$ na sekundę");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
 
                         savePref(shopDps2KeyString, shopDps2);
+                        savePref(patrimonyBoughtKeyString, patrimonyBought);
                         savePref(MainActivity.dpsKeyString, MainActivity.dps);
                         savePref(MainActivity.dotKeyString, MainActivity.dot);
 
@@ -107,11 +111,11 @@ public class ShopSecond extends Activity {
                 if (id == 2) {
                     if(MainActivity.dot >= shopDps3){
                         MainActivity.dot -= shopDps3;
-                        MainActivity.dps += 100;
+                        MainActivity.dps += (100 * Statistics.resetMultiplier);
 
                         shopDps3 *= 1.5;
 
-                        holdingsData.setDescription(shopDps3 + "$ | +100$ na sekundę");
+                        holdingsData.setDescription(shopDps3+"$ | +" + (100 * Statistics.resetMultiplier) + "$ na sekundę");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -128,11 +132,11 @@ public class ShopSecond extends Activity {
                 if (id == 3) {
                     if(MainActivity.dot >= shopDps4){
                         MainActivity.dot -= shopDps4;
-                        MainActivity.dps += 150;
+                        MainActivity.dps += (150 * Statistics.resetMultiplier);
 
                         shopDps4 *= 1.5;
 
-                        holdingsData.setDescription(shopDps4 + "$ | +150$ na sekundę");
+                        holdingsData.setDescription(shopDps4+"$ | +" + (150 * Statistics.resetMultiplier) + "$ na sekundę");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -154,22 +158,23 @@ public class ShopSecond extends Activity {
         ArrayList<HoldingsItem> results = new ArrayList<HoldingsItem>();
         HoldingsItem holdingsData = new HoldingsItem();
         holdingsData.setName("Browar");
-        holdingsData.setDescription(shopDps+"$ | +10$ na sekundę");
+        holdingsData.setDescription(shopDps+"$ | +" + (10 * Statistics.resetMultiplier) + "$ na sekundę");
+
         results.add(holdingsData);
 
         holdingsData = new HoldingsItem();
         holdingsData.setName("Ojcowizna");
-        holdingsData.setDescription(shopDps2+"$ | +50$ na sekundę");
+        holdingsData.setDescription(shopDps2+"$ | +" + (50 * Statistics.resetMultiplier) + "$ na sekundę");
         results.add(holdingsData);
 
         holdingsData = new HoldingsItem();
         holdingsData.setName("Pałacyk");
-        holdingsData.setDescription(shopDps3+"$ | +100$ na sekundę");
+        holdingsData.setDescription(shopDps3+"$ | +" + (100 * Statistics.resetMultiplier) + "$ na sekundę");
         results.add(holdingsData);
 
         holdingsData = new HoldingsItem();
         holdingsData.setName("Plebania");
-        holdingsData.setDescription(shopDps4+"$ | +150$ na sekundę");
+        holdingsData.setDescription(shopDps4+"$ | +" + (150 * Statistics.resetMultiplier) + "$ na sekundę");
         results.add(holdingsData);
 
         return results;
@@ -183,6 +188,9 @@ public class ShopSecond extends Activity {
 
         long shopDps2Key = sharedPref.getLong(shopDps2KeyString, 4000);
         shopDps2 = shopDps2Key;
+
+        long patrimonyBoughtKey = sharedPref.getLong(patrimonyBoughtKeyString, 0);
+        patrimonyBought = patrimonyBoughtKey;
 
         long shopDps3Key = sharedPref.getLong(shopDps3KeyString, 10000);
         shopDps3 = shopDps3Key;

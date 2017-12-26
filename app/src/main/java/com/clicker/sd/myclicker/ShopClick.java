@@ -17,14 +17,14 @@ public class ShopClick extends Activity {
 
     //Values
 
-    public long shopDpc;
-    public String shopDpcKeyString = "shopDpc";
-    public long shopDpc2;
-    public String shopDpc2KeyString = "shopDpc2";
-    public long shopDpc3;
-    public String shopDpc3KeyString = "shopDpc3";
-    public long shopDpc4;
-    public String shopDpc4KeyString = "shopDpc4";
+    public static long shopDpc;
+    public static String shopDpcKeyString = "shopDpc";
+    public static long shopDpc2;
+    public static String shopDpc2KeyString = "shopDpc2";
+    public static long shopDpc3;
+    public static String shopDpc3KeyString = "shopDpc3";
+    public static long shopDpc4;
+    public static String shopDpc4KeyString = "shopDpc4";
 
     private CustomListAdapter2 adapter;
 
@@ -65,11 +65,11 @@ public class ShopClick extends Activity {
                 if (id == 0) {
                     if(MainActivity.dot >= shopDpc){
                         MainActivity.dot -= shopDpc;
-                        MainActivity.dpc += 10;
+                        MainActivity.dpc += (10 * Statistics.resetMultiplier);
 
                         shopDpc *= 1.5;
 
-                        guardsData.setDescription(shopDpc + "$ | +10$ za klik");
+                        guardsData.setDescription(shopDpc+"$ | +" + (10 * Statistics.resetMultiplier) + "$ za klik");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -86,11 +86,11 @@ public class ShopClick extends Activity {
                 if (id == 1) {
                     if(MainActivity.dot >= shopDpc2){
                         MainActivity.dot -= shopDpc2;
-                        MainActivity.dpc += 20;
+                        MainActivity.dpc += (20 * Statistics.resetMultiplier);
 
                         shopDpc2 *= 1.5;
 
-                        guardsData.setDescription(shopDpc2 + "$ | +20$ za klik");
+                        guardsData.setDescription(shopDpc2+"$ | +" + (20 * Statistics.resetMultiplier) + "$ za klik");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -107,11 +107,11 @@ public class ShopClick extends Activity {
                 if (id == 2) {
                     if(MainActivity.dot >= shopDpc3){
                         MainActivity.dot -= shopDpc3;
-                        MainActivity.dpc += 30;
+                        MainActivity.dpc += (30 * Statistics.resetMultiplier);
 
                         shopDpc3 *= 1.5;
 
-                        guardsData.setDescription(shopDpc3 + "$ | +30$ za klik");
+                        guardsData.setDescription(shopDpc3+"$ | +" + (30 * Statistics.resetMultiplier) + "$ za klik");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -128,11 +128,11 @@ public class ShopClick extends Activity {
                 if (id == 3) {
                     if(MainActivity.dot >= shopDpc4){
                         MainActivity.dot -= shopDpc4;
-                        MainActivity.dpc += 40;
+                        MainActivity.dpc += (40 * Statistics.resetMultiplier);
 
                         shopDpc4 *= 1.5;
 
-                        guardsData.setDescription(shopDpc4 + "$ | +40$ za klik");
+                        guardsData.setDescription(shopDpc4+"$ | +" + (40 * Statistics.resetMultiplier) + "$ za klik");
                         adapter.notifyDataSetChanged();
                         MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
                         MainActivity.dotsView.setText(MainActivity.dot + "$");
@@ -154,22 +154,22 @@ public class ShopClick extends Activity {
         ArrayList<GuardsItem> results = new ArrayList<GuardsItem>();
         GuardsItem guardsData = new GuardsItem();
         guardsData.setName("Osa");
-        guardsData.setDescription(shopDpc+"$ | +10$ za klik");
+        guardsData.setDescription(shopDpc+"$ | +" + (10 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
         guardsData.setName("Rumcajs");
-        guardsData.setDescription(shopDpc2+"$ | +20$ za klik");
+        guardsData.setDescription(shopDpc2+"$ | +" + (20 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
         guardsData.setName("Włoska mafia");
-        guardsData.setDescription(shopDpc3+"$ | +30$ za klik");
+        guardsData.setDescription(shopDpc3+"$ | +" + (30 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
         guardsData.setName("Ukraińscy gangsterzy");
-        guardsData.setDescription(shopDpc4+"$ | +40$ za klik");
+        guardsData.setDescription(shopDpc4+"$ | +" + (40 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         return results;

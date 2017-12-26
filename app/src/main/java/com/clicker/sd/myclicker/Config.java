@@ -52,8 +52,10 @@ public class Config extends Activity implements View.OnClickListener {
                 if (music.isChecked())
                 {
                     MainActivity.mp2.setVolume(1,1);
+                    checkingMusic = true;
                 } else {
                     MainActivity.mp2.setVolume(0,0);
+                    checkingMusic = false;
                 }
                 savePref(checkingMusicKeyString, music.isChecked());
                 break;
@@ -61,8 +63,10 @@ public class Config extends Activity implements View.OnClickListener {
                 if (sound.isChecked())
                 {
                     MainActivity.mp1.setVolume(1,1);
+                    checkingSound = true;
                 } else {
                     MainActivity.mp1.setVolume(0,0);
+                    checkingSound = false;
                 }
                 savePref(checkingSoundKeyString, sound.isChecked());
                 break;
@@ -103,7 +107,17 @@ public class Config extends Activity implements View.OnClickListener {
         } else {
             MainActivity.mp1.setVolume(0,0);
         }
+        if (music.isChecked() && sound.isChecked()) {
+            MainActivity.mp2.setVolume(0.3f, 0.3f);
+        }
         MainActivity.mp1.start();
+        MainActivity.mp1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                if (music.isChecked() && sound.isChecked()) {
+                    MainActivity.mp2.setVolume(1, 1);
+                }
+            }
+        });
     }
 
     public void randomSoundBtn(View v) {

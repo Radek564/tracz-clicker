@@ -168,7 +168,7 @@ public class ShopDecorations extends Activity {
 
         decorationsData = new DecorationsItem();
         decorationsData.setName("Pan Walencik");
-        decorationsData.setDescription("50000$");
+        decorationsData.setDescription("50000$ | Zwiększa dochód z ojcowizny o 10%");
         results.add(decorationsData);
 
         decorationsData = new DecorationsItem();
