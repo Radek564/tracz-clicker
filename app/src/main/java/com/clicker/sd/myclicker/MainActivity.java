@@ -10,6 +10,10 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.preference.PreferenceManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -190,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                             totalDps += dps;
 
                             if (ShopDecorations.shopDec2Bought == 1) {
-                                patrimonyBonus = ShopSecond.patrimonyBought*50*0.1;
+                                patrimonyBonus = ShopSecond.patrimonyBought*(50*Statistics.resetMultiplier)*0.1;
                                 dot += patrimonyBonus;
                                 totalDot += patrimonyBonus;
                                 totalDps += patrimonyBonus;
@@ -289,13 +293,49 @@ public class MainActivity extends AppCompatActivity {
 
         final Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
 
+        //final TextView earn = (TextView) findViewById(R.id.earn);
+
         dotBtn.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                /*
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+                Random R = new Random();
+                float dx = R.nextFloat() * dm.widthPixels;
+                float dy = R.nextFloat() * dm.heightPixels;
+
+                Animation fadein2 = new AlphaAnimation(0, 1);
+                fadein2.setInterpolator(new DecelerateInterpolator());
+                fadein2.setDuration(1000);
+
+                Animation fadeout2 = new AlphaAnimation(1, 0);
+                fadeout2.setInterpolator(new AccelerateInterpolator());
+                fadeout2.setStartOffset(1000);
+                fadeout2.setDuration(1000);
+
+                AnimationSet set2 = new AnimationSet(false);
+                set2.addAnimation(fadein2);
+                set2.addAnimation(fadeout2);
+                */
 
                 if(event.getAction() == (MotionEvent.ACTION_UP)){
                     dotBtn.startAnimation(anim);
+
+
+                   /*
+                   earn.setText("+" + dpc + "$");
+
+                    earn.animate()
+                            .x(dx)
+                            .y(dy)
+                            .setDuration(0)
+                            .start();
+
+                    earn.startAnimation(set2);
+                    */
+
 
                     dot += dpc;
                     totalDot += dpc;
@@ -410,7 +450,9 @@ public class MainActivity extends AppCompatActivity {
     float maxStartY = 1.0f;
     float minY = -1.0f;
     float maxY = 2.0f;
-    Animation animation;
+    Animation move;
+    Animation fadein;
+    Animation fadeout;
 
     public void animationQuote(){
 
@@ -420,19 +462,33 @@ public class MainActivity extends AppCompatActivity {
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         quoteText.setTextColor(color);
 
-        animation = new TranslateAnimation(
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setInterpolator(new DecelerateInterpolator());
+        fadein.setDuration(1000);
+
+        fadeout = new AlphaAnimation(1, 0);
+        fadeout.setInterpolator(new AccelerateInterpolator());
+        fadeout.setStartOffset(5000);
+        fadeout.setDuration(1000);
+
+        move = new TranslateAnimation(
                 TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxStartX - minStartX) + minStartX,
                 TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxX - minX) + minX,
                 TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxStartY - minStartY) + minStartY,
                 TranslateAnimation.RELATIVE_TO_PARENT,rnd.nextFloat() * (maxY - minY) + minY);
 
-        animation.setDuration(6000);
-        animation.setFillAfter(true);
-        animation.setInterpolator(new LinearInterpolator());
+        move.setDuration(6000);
+        move.setFillAfter(true);
+        move.setInterpolator(new LinearInterpolator());
 
-        quoteText.startAnimation(animation);
+        AnimationSet set = new AnimationSet(false);
+        set.addAnimation(fadein);
+        set.addAnimation(move);
+        set.addAnimation(fadeout);
 
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        quoteText.startAnimation(set);
+
+        set.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
             }
@@ -451,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
         mp1.release();
         mp2.release();
         thread.interrupt();
+        timer.cancel();
     }
 
 }

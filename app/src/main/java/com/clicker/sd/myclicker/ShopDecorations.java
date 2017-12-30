@@ -18,24 +18,24 @@ public class ShopDecorations extends Activity {
 
     //Values
 
-    public long shopDec;
+    public static long shopDec;
     public static long shopDecBought;
-    public String shopDecKeyString = "shopDec";
+    public static String shopDecKeyString = "shopDec";
     public static String shopDecBoughtKeyString = "shopDecBought";
 
-    public long shopDec2;
+    public static long shopDec2;
     public static long shopDec2Bought;
-    public String shopDec2KeyString = "shopDec2";
+    public static String shopDec2KeyString = "shopDec2";
     public static String shopDec2BoughtKeyString = "shopDec2Bought";
 
-    public long shopDec3;
+    public static long shopDec3;
     public static long shopDec3Bought;
-    public String shopDec3KeyString = "shopDec3";
+    public static String shopDec3KeyString = "shopDec3";
     public static String shopDec3BoughtKeyString = "shopDec3Bought";
 
-    public long shopDec4;
+    public static long shopDec4;
     public static long shopDec4Bought;
-    public String shopDec4KeyString = "shopDec4";
+    public static String shopDec4KeyString = "shopDec4";
     public static String shopDec4BoughtKeyString = "shopDec4Bought";
 
     private CustomListAdapter3 adapter;
@@ -163,22 +163,22 @@ public class ShopDecorations extends Activity {
         ArrayList<DecorationsItem> results = new ArrayList<DecorationsItem>();
         DecorationsItem decorationsData = new DecorationsItem();
         decorationsData.setName("Roślinka");
-        decorationsData.setDescription("10000$");
+        decorationsData.setDescription(shopDec+"$");
         results.add(decorationsData);
 
         decorationsData = new DecorationsItem();
         decorationsData.setName("Pan Walencik");
-        decorationsData.setDescription("50000$ | Zwiększa dochód z ojcowizny o 10%");
+        decorationsData.setDescription(shopDec2+"$ | +10% dochodu z ojcowizny");
         results.add(decorationsData);
 
         decorationsData = new DecorationsItem();
         decorationsData.setName("Wikary");
-        decorationsData.setDescription("100000$");
+        decorationsData.setDescription(shopDec3+"$");
         results.add(decorationsData);
 
         decorationsData = new DecorationsItem();
         decorationsData.setName("Czapka świąteczna");
-        decorationsData.setDescription("500000$");
+        decorationsData.setDescription(shopDec4+"$");
         results.add(decorationsData);
 
         return results;

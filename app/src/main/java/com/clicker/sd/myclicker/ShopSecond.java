@@ -25,6 +25,12 @@ public class ShopSecond extends Activity {
     public static String shopDps3KeyString = "shopDps3";
     public static long shopDps4;
     public static String shopDps4KeyString = "shopDps4";
+    public static long shopDps5;
+    public static String shopDps5KeyString = "shopDps5";
+    public static long shopDps6;
+    public static String shopDps6KeyString = "shopDps6";
+    public static long shopDps7;
+    public static String shopDps7KeyString = "shopDps7";
     public static long patrimonyBought;
     public static String patrimonyBoughtKeyString = "patrimonyBought";
 
@@ -149,6 +155,69 @@ public class ShopSecond extends Activity {
                         Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
+                if (id == 4) {
+                    if(MainActivity.dot >= shopDps5){
+                        MainActivity.dot -= shopDps5;
+                        MainActivity.dps += (300 * Statistics.resetMultiplier);
+
+                        shopDps5 *= 1.5;
+
+                        holdingsData.setDescription(shopDps5+"$ | +" + (300 * Statistics.resetMultiplier) + "$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps5KeyString, shopDps5);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 5) {
+                    if(MainActivity.dot >= shopDps6){
+                        MainActivity.dot -= shopDps6;
+                        MainActivity.dps += (500 * Statistics.resetMultiplier);
+
+                        shopDps6 *= 1.5;
+
+                        holdingsData.setDescription(shopDps6+"$ | +" + (500 * Statistics.resetMultiplier) + "$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps6KeyString, shopDps6);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 6) {
+                    if(MainActivity.dot >= shopDps7){
+                        MainActivity.dot -= shopDps7;
+                        MainActivity.dps += (800 * Statistics.resetMultiplier);
+
+                        shopDps7 *= 1.5;
+
+                        holdingsData.setDescription(shopDps7+"$ | +" + (800 * Statistics.resetMultiplier) + "$ na sekundę");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDps7KeyString, shopDps7);
+                        savePref(MainActivity.dpsKeyString, MainActivity.dps);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
@@ -177,6 +246,21 @@ public class ShopSecond extends Activity {
         holdingsData.setDescription(shopDps4+"$ | +" + (150 * Statistics.resetMultiplier) + "$ na sekundę");
         results.add(holdingsData);
 
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Kościół");
+        holdingsData.setDescription(shopDps5+"$ | +" + (300 * Statistics.resetMultiplier) + "$ na sekundę");
+        results.add(holdingsData);
+
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Restauracja");
+        holdingsData.setDescription(shopDps6+"$ | +" + (500 * Statistics.resetMultiplier) + "$ na sekundę");
+        results.add(holdingsData);
+
+        holdingsData = new HoldingsItem();
+        holdingsData.setName("Willa");
+        holdingsData.setDescription(shopDps7+"$ | +" + (800 * Statistics.resetMultiplier) + "$ na sekundę");
+        results.add(holdingsData);
+
         return results;
     }
 
@@ -197,6 +281,15 @@ public class ShopSecond extends Activity {
 
         long shopDps4Key = sharedPref.getLong(shopDps4KeyString, 25000);
         shopDps4 = shopDps4Key;
+
+        long shopDps5Key = sharedPref.getLong(shopDps5KeyString, 60000);
+        shopDps5 = shopDps5Key;
+
+        long shopDps6Key = sharedPref.getLong(shopDps6KeyString, 100000);
+        shopDps6 = shopDps6Key;
+
+        long shopDps7Key = sharedPref.getLong(shopDps7KeyString, 150000);
+        shopDps7 = shopDps7Key;
 
     }
 

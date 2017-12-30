@@ -33,7 +33,7 @@ public class Config extends Activity implements View.OnClickListener {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.5));
+        getWindow().setLayout((int)(width*.8),(int)(height*.4));
 
         music = (CheckBox) findViewById(R.id.musicBox);
         music.setOnClickListener(this);

@@ -25,6 +25,18 @@ public class ShopClick extends Activity {
     public static String shopDpc3KeyString = "shopDpc3";
     public static long shopDpc4;
     public static String shopDpc4KeyString = "shopDpc4";
+    public static long shopDpc5;
+    public static String shopDpc5KeyString = "shopDpc5";
+    public static long shopDpc6;
+    public static String shopDpc6KeyString = "shopDpc6";
+    public static long shopDpc7;
+    public static String shopDpc7KeyString = "shopDpc7";
+    public static long shopDpc8;
+    public static String shopDpc8KeyString = "shopDpc8";
+    public static long shopDpc9;
+    public static String shopDpc9KeyString = "shopDpc9";
+    public static long shopDpc10;
+    public static String shopDpc10KeyString = "shopDpc10";
 
     private CustomListAdapter2 adapter;
 
@@ -145,6 +157,132 @@ public class ShopClick extends Activity {
                         Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
+                if (id == 4) {
+                    if(MainActivity.dot >= shopDpc5){
+                        MainActivity.dot -= shopDpc5;
+                        MainActivity.dpc += (50 * Statistics.resetMultiplier);
+
+                        shopDpc5 *= 1.5;
+
+                        guardsData.setDescription(shopDpc5+"$ | +" + (50 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc5KeyString, shopDpc5);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 5) {
+                    if(MainActivity.dot >= shopDpc6){
+                        MainActivity.dot -= shopDpc6;
+                        MainActivity.dpc += (60 * Statistics.resetMultiplier);
+
+                        shopDpc6 *= 1.5;
+
+                        guardsData.setDescription(shopDpc6+"$ | +" + (60 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc6KeyString, shopDpc6);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 6) {
+                    if(MainActivity.dot >= shopDpc7){
+                        MainActivity.dot -= shopDpc7;
+                        MainActivity.dpc += (70 * Statistics.resetMultiplier);
+
+                        shopDpc7 *= 1.5;
+
+                        guardsData.setDescription(shopDpc7+"$ | +" + (70 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc7KeyString, shopDpc7);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 7) {
+                    if(MainActivity.dot >= shopDpc8){
+                        MainActivity.dot -= shopDpc8;
+                        MainActivity.dpc += (80 * Statistics.resetMultiplier);
+
+                        shopDpc8 *= 1.5;
+
+                        guardsData.setDescription(shopDpc8+"$ | +" + (80 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc8KeyString, shopDpc8);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 8) {
+                    if(MainActivity.dot >= shopDpc9){
+                        MainActivity.dot -= shopDpc9;
+                        MainActivity.dpc += (90 * Statistics.resetMultiplier);
+
+                        shopDpc9 *= 1.5;
+
+                        guardsData.setDescription(shopDpc9+"$ | +" + (90 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc9KeyString, shopDpc9);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (id == 9) {
+                    if(MainActivity.dot >= shopDpc10){
+                        MainActivity.dot -= shopDpc10;
+                        MainActivity.dpc += (100 * Statistics.resetMultiplier);
+
+                        shopDpc10 *= 1.5;
+
+                        guardsData.setDescription(shopDpc10+"$ | +" + (100 * Statistics.resetMultiplier) + "$ za klik");
+                        adapter.notifyDataSetChanged();
+                        MainActivity.dpsAndDpcView.setText(MainActivity.dps +"$/sek" + System.getProperty ("line.separator") + MainActivity.dpc + "$/klik");
+                        MainActivity.dotsView.setText(MainActivity.dot + "$");
+
+                        savePref(shopDpc10KeyString, shopDpc10);
+                        savePref(MainActivity.dpcKeyString, MainActivity.dpc);
+                        savePref(MainActivity.dotKeyString, MainActivity.dot);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Potrzebujesz więcej dolarów!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
@@ -153,23 +291,53 @@ public class ShopClick extends Activity {
     public ArrayList getListData() {
         ArrayList<GuardsItem> results = new ArrayList<GuardsItem>();
         GuardsItem guardsData = new GuardsItem();
-        guardsData.setName("Osa");
+        guardsData.setName("Pani Marylka");
         guardsData.setDescription(shopDpc+"$ | +" + (10 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
-        guardsData.setName("Rumcajs");
+        guardsData.setName("Pani Joanka");
         guardsData.setDescription(shopDpc2+"$ | +" + (20 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
-        guardsData.setName("Włoska mafia");
+        guardsData.setName("Pani Weronika");
         guardsData.setDescription(shopDpc3+"$ | +" + (30 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         guardsData = new GuardsItem();
-        guardsData.setName("Ukraińscy gangsterzy");
+        guardsData.setName("Gosposia Mai");
         guardsData.setDescription(shopDpc4+"$ | +" + (40 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Niewolnica Milada");
+        guardsData.setDescription(shopDpc5+"$ | +" + (50 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Osa");
+        guardsData.setDescription(shopDpc6+"$ | +" + (60 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Rumcajs");
+        guardsData.setDescription(shopDpc7+"$ | +" + (70 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Marysia");
+        guardsData.setDescription(shopDpc8+"$ | +" + (80 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Włoska mafia");
+        guardsData.setDescription(shopDpc9+"$ | +" + (90 * Statistics.resetMultiplier) + "$ za klik");
+        results.add(guardsData);
+
+        guardsData = new GuardsItem();
+        guardsData.setName("Ukraińscy gangsterzy");
+        guardsData.setDescription(shopDpc10+"$ | +" + (100 * Statistics.resetMultiplier) + "$ za klik");
         results.add(guardsData);
 
         return results;
@@ -189,6 +357,24 @@ public class ShopClick extends Activity {
 
         long shopDpc4Key = sharedPref.getLong(shopDpc4KeyString, 50000);
         shopDpc4 = shopDpc4Key;
+
+        long shopDpc5Key = sharedPref.getLong(shopDpc5KeyString, 80000);
+        shopDpc5 = shopDpc5Key;
+
+        long shopDpc6Key = sharedPref.getLong(shopDpc6KeyString, 100000);
+        shopDpc6 = shopDpc6Key;
+
+        long shopDpc7Key = sharedPref.getLong(shopDpc7KeyString, 150000);
+        shopDpc7 = shopDpc7Key;
+
+        long shopDpc8Key = sharedPref.getLong(shopDpc8KeyString, 200000);
+        shopDpc8 = shopDpc8Key;
+
+        long shopDpc9Key = sharedPref.getLong(shopDpc9KeyString, 260000);
+        shopDpc9 = shopDpc9Key;
+
+        long shopDpc10Key = sharedPref.getLong(shopDpc9KeyString, 300000);
+        shopDpc10 = shopDpc10Key;
 
     }
 
