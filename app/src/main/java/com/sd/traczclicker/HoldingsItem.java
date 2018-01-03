@@ -1,4 +1,4 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 /**
  * Created by John on 2017-12-23.

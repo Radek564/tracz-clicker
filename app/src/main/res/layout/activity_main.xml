@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.clicker.sd.myclicker.MainActivity"
+    tools:context="com.sd.traczclicker.MainActivity"
     tools:ignore="contentDescription"
     android:orientation="vertical" >
 
@@ -119,6 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_above="@id/adView"
         android:layout_toLeftOf="@+id/shopBtn2"
         android:layout_toStartOf="@+id/shopBtn2"
         android:gravity="center"
@@ -137,6 +138,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_above="@id/adView"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxLines="1"
@@ -154,6 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_above="@id/adView"
         android:layout_toEndOf="@+id/shopBtn2"
         android:layout_toRightOf="@+id/shopBtn2"
         android:gravity="center"
@@ -197,33 +200,15 @@
         android:textColor="#ff0000"
         android:textSize="30sp" />
 
-    <!--
- <TextView
-     android:id="@+id/earn"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_below="@+id/wikary"
-     android:layout_toEndOf="@+id/tesc"
-     android:layout_toRightOf="@+id/tesc"
-     android:maxLines="1"
-     android:shadowColor="#000000"
-     android:shadowDx="1.5"
-     android:shadowDy="1.3"
-     android:shadowRadius="1.6"
-     android:text="+1"
-     android:textColor="#ffffff"
-     android:textSize="30sp"
-     android:visibility="invisible"/>
-      -->
-
- <Button
-     android:id="@+id/button"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_alignBottom="@+id/dpsAndDpcView"
-     android:layout_alignParentEnd="true"
-     android:layout_alignParentRight="true"
-     android:text="Button"
-     android:visibility="invisible" />
+	<com.google.android.gms.ads.AdView
+		xmlns:ads="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/adView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_alignParentBottom="true"
+		ads:adSize="BANNER"
+		ads:adUnitId="ca-app-pub-1707292710475822/4097160365">
+	</com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

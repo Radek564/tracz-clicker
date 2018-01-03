@@ -1,4 +1,4 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

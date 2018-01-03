@@ -1,4 +1,4 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.clicker.sd.myclicker", appContext.getPackageName());
+        assertEquals("com.sd.myclicker", appContext.getPackageName());
     }
 }

@@ -1,8 +1,7 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.preference.PreferenceManager;

@@ -1,4 +1,4 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 import android.app.Activity;
 import android.content.Intent;

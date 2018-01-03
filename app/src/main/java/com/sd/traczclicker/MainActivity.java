@@ -1,4 +1,4 @@
-package com.clicker.sd.myclicker;
+package com.sd.traczclicker;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -19,6 +19,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,11 @@ import android.content.Intent;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,10 +84,18 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] quotes;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, "ca-app-pub-1707292710475822~6599200626");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         quotes = getResources().getStringArray(R.array.quotes);
 
@@ -285,57 +299,19 @@ public class MainActivity extends AppCompatActivity {
 
         czapka = (ImageView) findViewById(R.id.czapka);
 
-        Button shopBtn = (Button) findViewById(R.id.shopBtn);
-
         dotBtn = (ImageButton) findViewById(R.id.dotBtn);
 
         background = (ImageView) findViewById(R.id.mainbackground);
 
         final Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
 
-        //final TextView earn = (TextView) findViewById(R.id.earn);
-
         dotBtn.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                /*
-                DisplayMetrics dm = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(dm);
-                Random R = new Random();
-                float dx = R.nextFloat() * dm.widthPixels;
-                float dy = R.nextFloat() * dm.heightPixels;
-
-                Animation fadein2 = new AlphaAnimation(0, 1);
-                fadein2.setInterpolator(new DecelerateInterpolator());
-                fadein2.setDuration(1000);
-
-                Animation fadeout2 = new AlphaAnimation(1, 0);
-                fadeout2.setInterpolator(new AccelerateInterpolator());
-                fadeout2.setStartOffset(1000);
-                fadeout2.setDuration(1000);
-
-                AnimationSet set2 = new AnimationSet(false);
-                set2.addAnimation(fadein2);
-                set2.addAnimation(fadeout2);
-                */
 
                 if(event.getAction() == (MotionEvent.ACTION_UP)){
                     dotBtn.startAnimation(anim);
-
-
-                   /*
-                   earn.setText("+" + dpc + "$");
-
-                    earn.animate()
-                            .x(dx)
-                            .y(dy)
-                            .setDuration(0)
-                            .start();
-
-                    earn.startAnimation(set2);
-                    */
-
 
                     dot += dpc;
                     totalDot += dpc;
@@ -353,15 +329,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button = (Button) findViewById(R.id.button);
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dot += 10000000;
-            }
-        });
+        final Button shopBtn = (Button) findViewById(R.id.shopBtn);
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -370,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button shopBtn2 = (Button) findViewById(R.id.shopBtn2);
+        final Button shopBtn2 = (Button) findViewById(R.id.shopBtn2);
 
         shopBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -379,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button shopBtn3 = (Button) findViewById(R.id.shopBtn3);
+        final Button shopBtn3 = (Button) findViewById(R.id.shopBtn3);
 
         shopBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -403,6 +371,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Statistics.class));
+            }
+        });
+
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)shopBtn.getLayoutParams();
+                RelativeLayout.LayoutParams params2 = (RelativeLayout.LayoutParams)shopBtn2.getLayoutParams();
+                RelativeLayout.LayoutParams params3 = (RelativeLayout.LayoutParams)shopBtn3.getLayoutParams();
+
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                params3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+
+                shopBtn.setLayoutParams(params);
+                shopBtn2.setLayoutParams(params2);
+                shopBtn3.setLayoutParams(params3);
             }
         });
     }

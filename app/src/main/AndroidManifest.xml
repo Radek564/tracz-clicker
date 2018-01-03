@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.clicker.sd.myclicker">
+    package="com.sd.traczclicker">
 
     <application
 
@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name="com.sd.traczclicker.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,32 +20,32 @@
 
         </activity>
 
-        <activity android:name=".ShopClick"
+        <activity android:name="com.sd.traczclicker.ShopClick"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".ShopSecond"
+        <activity android:name="com.sd.traczclicker.ShopSecond"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".ShopDecorations"
+        <activity android:name="com.sd.traczclicker.ShopDecorations"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Config"
+        <activity android:name="com.sd.traczclicker.Config"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Statistics"
+        <activity android:name="com.sd.traczclicker.Statistics"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Reset"
+        <activity android:name="com.sd.traczclicker.Reset"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait">
         </activity>
