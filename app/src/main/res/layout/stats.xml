@@ -14,6 +14,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
@@ -29,6 +30,7 @@
         android:layout_alignLeft="@+id/totalDots"
         android:layout_alignStart="@+id/totalDots"
         android:layout_below="@+id/totalDots"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
@@ -44,6 +46,7 @@
         android:layout_alignLeft="@+id/totalDpc"
         android:layout_alignStart="@+id/totalDpc"
         android:layout_below="@+id/totalDpc"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
@@ -59,14 +62,14 @@
         android:layout_alignLeft="@+id/totalDps"
         android:layout_alignStart="@+id/totalDps"
         android:layout_below="@+id/totalDps"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
         android:shadowRadius="1.6"
-        android:text="Premia z ojcowizny:"
+        android:text="Premia z ojcowizny: Brak"
         android:textColor="#ffffff"
-        android:textSize="13sp"
-        android:visibility="invisible" />
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/totalReset"
@@ -75,14 +78,14 @@
         android:layout_alignLeft="@+id/totalBonus"
         android:layout_alignStart="@+id/totalBonus"
         android:layout_below="@+id/totalBonus"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
         android:shadowRadius="1.6"
-        android:text="Premia z resetu:"
+        android:text="Premia z resetu: Brak"
         android:textColor="#ffffff"
-        android:textSize="13sp"
-        android:visibility="invisible" />
+        android:textSize="13sp" />
 
     <Button
         android:id="@+id/resetBtn"

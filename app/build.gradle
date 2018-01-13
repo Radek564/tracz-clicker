@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.sd.traczclicker"
+        applicationId "com.palusiniak.traczclicker"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
